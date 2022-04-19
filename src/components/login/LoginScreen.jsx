@@ -1,7 +1,34 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../auth/authContext';
+import { types } from '../../types';
 
 export const LoginScreen = () => {
+  const { dispatch } = useContext(AuthContext)
+  const navigate = useNavigate()
+
+  const handleLogin = () => {
+    const action = {
+      type: types.login,
+      payload: {
+        name: 'Brayan',
+        email: 'bhcastillor@gmail.com'
+      }
+    }
+
+    dispatch(action)
+    const lastPath = localStorage.getItem('lastPath') || '/marvel'
+    navigate(lastPath, { replace: true })
+  }
+
   return (
-    <div>Logout</div>
+    <div className='container'>
+      <h1>Login</h1>
+      <hr />
+      <button
+        className='btn btn-primary'
+        onClick={handleLogin}
+      >Login</button>
+    </div>
   )
 }
